@@ -256,21 +256,26 @@ class _ChooseLocationState extends State<ChooseLocation> {
 
 
             Flexible(
-                child:IgnorePointer(
+
                   child: GridView.count(
                     crossAxisCount: 4,
                     crossAxisSpacing: 4.0,
                     mainAxisSpacing: 8.0,
                     shrinkWrap: true,
+                    physics: NeverScrollableScrollPhysics(),
 
                     children: List.generate(choices.length, (index) {
-                      return  SelectCard(choice: choices[index]);
+                      return  InkWell(
+                          onTap: (){
+                            productController.fetchProducts(choices[index].category);
+                            },
+                          child: SelectCard(choice: choices[index]));
 
                     }
                     ),
                   ),
 
-                )
+                
             ),
             SizedBox(height: 10),
 
@@ -321,7 +326,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
           mainAxisSpacing: 18.0,
           childAspectRatio: 1,
           shrinkWrap: true,
-
+    physics: NeverScrollableScrollPhysics(),
           children:
           List.generate(productController.productList.length, (index) {
             //  return Text("count ${productController.productList[index]?.name}");

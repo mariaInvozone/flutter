@@ -7,20 +7,21 @@ import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:world_time_pro/models/product_model.dart';
 class Choice {
-  Choice({ this.title, this.icon});
+  Choice({ this.title, this.icon, this.category});
   final String? title;
+  final String? category;
   final IconData? icon;
 }
 
 List<Choice> choices =  <Choice>[
-  Choice(title: 'Clothes', icon: Icons.person),
-  Choice(title: 'Bags', icon: Icons.shopping_bag),
-  Choice(title: 'Shoes', icon: Icons.roller_skating),
-  Choice(title: 'Electronics', icon: Icons.settings_remote),
-  Choice(title: 'Watch', icon: Icons.watch),
-  Choice(title: 'Jewelry', icon: Icons.diamond),
-  Choice(title: 'Kitchen', icon: Icons.soup_kitchen),
-  Choice(title: 'Toys', icon: Icons.smart_toy),
+  Choice(title: 'Clothes', category:'womens-dresses',icon: Icons.person),
+  Choice(title: 'Bags',  category:'womens-bags',icon: Icons.shopping_bag),
+  Choice(title: 'Shoes', category:'womens-shoes', icon: Icons.roller_skating),
+  Choice(title: 'Electronics',  category:'automotive',icon: Icons.settings_remote),
+  Choice(title: 'Watch', category:'womens-watches', icon: Icons.watch),
+  Choice(title: 'Jewelry', category:'womens-jewellery', icon: Icons.diamond),
+  Choice(title: 'Kitchen', category:'groceries', icon: Icons.soup_kitchen),
+  Choice(title: 'Toys',  category:'home-decoration',icon: Icons.smart_toy),
 ];
 
 
@@ -64,7 +65,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-print(products);
+print(products?.images);
 
     return
       Column(
@@ -80,50 +81,47 @@ print(products);
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(19),
                   ),
-              // child: InkWell(
-              //   onTap: (){
-              //     Get.snackbar(
-              //       "",
-              //       "",
-              //       isDismissible: true,
-              //       dismissDirection: DismissDirection.horizontal,
-              //       titleText:Text( "Added to cart successfully",
-              //         style: TextStyle(color: Colors.black,
-              //           fontFamily: 'Comforta',
-              //           fontWeight: FontWeight.w900,
-              //         ),),
-              //       //vg leftBarIndicatorColor: Colors.black,
-              //       messageText:Text("${products?.title}",
-              //         style: TextStyle(color: Colors.black,
-              //           fontFamily: 'Comforta',
-              //
-              //         ),
-              //       ),
-              //       colorText: Colors.white,
-              //       backgroundColor: Colors.grey[400],
-              //       icon: const Icon(Icons.price_change),
-              //       snackPosition: SnackPosition.BOTTOM,
-              //     );
-              //
-              //
-              //   },
-              //                 child: new Image.network("${products?.imageLink}",
-              //                      height: 90,
-              //                      width: 90,
-              //
-              //                       fit: BoxFit.fill,
-              //                     ),
-              //               ),
-              //
+              child: InkWell(
+                onTap: (){
+                  Get.snackbar(
+                    "",
+                    "",
+                    isDismissible: true,
+                    dismissDirection: DismissDirection.horizontal,
+                    titleText:Text( "Added to cart successfully",
+                      style: TextStyle(color: Colors.black,
+                        fontFamily: 'Comforta',
+                        fontWeight: FontWeight.w900,
+                      ),),
+                    //vg leftBarIndicatorColor: Colors.black,
+                    messageText:Text("${products?.title}",
+                      style: TextStyle(color: Colors.black,
+                        fontFamily: 'Comforta',
+
+                      ),
+                    ),
+                    colorText: Colors.white,
+                    backgroundColor: Colors.grey[400],
+                    icon: const Icon(Icons.price_change),
+                    snackPosition: SnackPosition.BOTTOM,
+                  );
+
+
+                },
+                              child: new Image.network('${products?.images?[0]}',
+                                   height: 50,
+                                   width: 50,
+
+                                    fit: BoxFit.fill,
+                                  ),
+                            ),
+
 
 
     ),
         SizedBox(height: 5),
-         Text("Hii",
-          // "
-          //     // "${products?.title} "
-          //     "sdfffs"
-          //     ,
+         Text("${products?.title}" ,
+
            maxLines: 1,
            style: const TextStyle(
                fontFamily: 'Comforta',
@@ -141,7 +139,7 @@ print(products);
             ),
 
             Text(
-              "4 |  ",
+              "${products?.rating} |  ",
 
               style: const TextStyle(
                   fontFamily: 'Comforta',
@@ -157,7 +155,7 @@ print(products);
               child: Padding(
                 padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
                 child: Text(
-                  "102 sold",
+                  "${products?.stock} sold",
                   style: const TextStyle(
                       fontFamily: 'Comforta',
                       color: Colors.grey,
@@ -171,14 +169,14 @@ print(products);
 
          SizedBox(height: 2),
 
-         //
-         // Text(
-         //  "${products?.price} ${products?.currency?.toLowerCase()}",
-         //   style: const TextStyle(
-         //       fontFamily: 'Comforta',
-         //       fontWeight: FontWeight.w900,
-         //       fontSize: 17.0),
-         //    ),
+
+         Text(
+          "${products?.discountPercentage} rs",
+           style: const TextStyle(
+               fontFamily: 'Comforta',
+               fontWeight: FontWeight.w900,
+               fontSize: 17.0),
+            ),
       ],
     );
 
@@ -202,9 +200,7 @@ class SelectCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return   InkWell(
-        onTap: (){print('hello');},
-        child:
+    return
         Column(
       mainAxisSize: MainAxisSize.min,
 
@@ -245,7 +241,6 @@ class SelectCard extends StatelessWidget {
               fontSize: 15.0),
         ),
       ],
-    ),
     );
   }
 }

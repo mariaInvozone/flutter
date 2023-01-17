@@ -15,14 +15,31 @@ class ProductController extends GetxController{
 
   @override
   void onInit(){
-    fetchProducts();
+   // fetchProducts('');
+    fetchAllProduct('');
     super.onInit();
   }
 
-  void fetchProducts() async{
+  // fetchAllProduct
+
+
+  void fetchAllProduct(String ? s) async{
     try{
       isLoading(true);
-      var products =await ApiService?.fetchProducts();
+      var products =await ApiService?.fetchAllProduct(s);
+      if(products!=null){
+        productList?.assignAll(products);
+      }
+    } finally{
+      isLoading(false);
+    }
+
+  }
+
+  void fetchProducts(String ? s) async{
+    try{
+      isLoading(true);
+      var products =await ApiService?.fetchProducts(s);
       if(products!=null){
         productList?.assignAll(products);
       }
