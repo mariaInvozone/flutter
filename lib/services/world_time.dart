@@ -30,15 +30,7 @@ class User {
   var name;
   var age;
 }
-class Student{
-  var name= "Tome".obs;
-  var age= 25.obs;
-  // var   name;
-  // var age;
-  // Student({this.name, this.age});
 
-
-}
 //Products
 class Products {
   Products({ this.title, this.icon, this.description, this.rating, this.sold,required this.thumbnail, this.price});
@@ -53,8 +45,8 @@ class Products {
     try{
       http.Response response= await  http.get(Uri.parse('https://dummyjson.com/products'));
      Map data=convert.jsonDecode(response.body);
-
-    //  print(data);
+      print('JJH');
+     print(data);
     }
     catch(e){
       print('eoor $e');
@@ -72,7 +64,7 @@ class ProductCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+print(products);
 
     return
       Column(
@@ -88,48 +80,50 @@ class ProductCard extends StatelessWidget {
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(19),
                   ),
-              child: InkWell(
-                onTap: (){
-                  Get.snackbar(
-                    "",
-                    "",
-                    isDismissible: true,
-                    dismissDirection: DismissDirection.horizontal,
-                    titleText:Text( "Added to cart successfully",
-                      style: TextStyle(color: Colors.black,
-                        fontFamily: 'Comforta',
-                        fontWeight: FontWeight.w900,
-                      ),),
-                    //vg leftBarIndicatorColor: Colors.black,
-                    messageText:Text("${products?.name}",
-                      style: TextStyle(color: Colors.black,
-                        fontFamily: 'Comforta',
-
-                      ),
-                    ),
-                    colorText: Colors.white,
-                    backgroundColor: Colors.grey[400],
-                    icon: const Icon(Icons.price_change),
-                    snackPosition: SnackPosition.BOTTOM,
-                  );
-
-
-                },
-                              child: new Image.network("${products?.imageLink}",
-                                   height: 90,
-                                   width: 90,
-
-                                    fit: BoxFit.fill,
-                                  ),
-                            ),
-                   
+              // child: InkWell(
+              //   onTap: (){
+              //     Get.snackbar(
+              //       "",
+              //       "",
+              //       isDismissible: true,
+              //       dismissDirection: DismissDirection.horizontal,
+              //       titleText:Text( "Added to cart successfully",
+              //         style: TextStyle(color: Colors.black,
+              //           fontFamily: 'Comforta',
+              //           fontWeight: FontWeight.w900,
+              //         ),),
+              //       //vg leftBarIndicatorColor: Colors.black,
+              //       messageText:Text("${products?.title}",
+              //         style: TextStyle(color: Colors.black,
+              //           fontFamily: 'Comforta',
+              //
+              //         ),
+              //       ),
+              //       colorText: Colors.white,
+              //       backgroundColor: Colors.grey[400],
+              //       icon: const Icon(Icons.price_change),
+              //       snackPosition: SnackPosition.BOTTOM,
+              //     );
+              //
+              //
+              //   },
+              //                 child: new Image.network("${products?.imageLink}",
+              //                      height: 90,
+              //                      width: 90,
+              //
+              //                       fit: BoxFit.fill,
+              //                     ),
+              //               ),
+              //
 
 
     ),
         SizedBox(height: 5),
-         Text(
-          "${products?.name}"
-              ,
+         Text("Hii",
+          // "
+          //     // "${products?.title} "
+          //     "sdfffs"
+          //     ,
            maxLines: 1,
            style: const TextStyle(
                fontFamily: 'Comforta',
@@ -177,14 +171,14 @@ class ProductCard extends StatelessWidget {
 
          SizedBox(height: 2),
 
-
-         Text(
-          "${products?.price} ${products?.currency?.toLowerCase()}",
-           style: const TextStyle(
-               fontFamily: 'Comforta',
-               fontWeight: FontWeight.w900,
-               fontSize: 17.0),
-            ),
+         //
+         // Text(
+         //  "${products?.price} ${products?.currency?.toLowerCase()}",
+         //   style: const TextStyle(
+         //       fontFamily: 'Comforta',
+         //       fontWeight: FontWeight.w900,
+         //       fontSize: 17.0),
+         //    ),
       ],
     );
 

@@ -15,7 +15,4 @@ class MyController extends GetxController{
     update();
 
   }
-
-
-
 }

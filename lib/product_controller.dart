@@ -31,9 +31,4 @@ class ProductController extends GetxController{
     }
 
   }
-
-
-
-
-
 }

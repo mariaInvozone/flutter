@@ -11,128 +11,55 @@ String productModelToJson(List<ProductModel?>? data) => json.encode(data == null
 class ProductModel {
   ProductModel({
     this.id,
-    this.brand,
-    this.name,
-    this.price,
-    this.priceSign,
-    this.currency,
-    this.imageLink,
-    this.productLink,
-    this.websiteLink,
+    this.title,
     this.description,
+    this.price,
+    this.discountPercentage,
     this.rating,
+    this.stock,
+    this.brand,
     this.category,
-    this.productType,
-    this.tagList,
-    this.createdAt,
-    this.updatedAt,
-    this.productApiUrl,
-    this.apiFeaturedImage,
-    this.productColors,
+    this.thumbnail,
+    this.images,
   });
 
   int? id;
-  String? brand;
-  String? name;
-  String? price;
-  String? priceSign;
-  String? currency;
-  String? imageLink;
-  String? productLink;
-  String? websiteLink;
+  String? title;
   String? description;
-  dynamic rating;
+  int? price;
+  double? discountPercentage;
+  double? rating;
+  int? stock;
+  String? brand;
   String? category;
-  String? productType;
-  List<TagList?>? tagList;
-  DateTime? createdAt;
-  DateTime? updatedAt;
-  String? productApiUrl;
-  String? apiFeaturedImage;
-  List<ProductColor?>? productColors;
+  String? thumbnail;
+  List<String?>? images;
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
     id: json["id"],
-    brand: json["brand"],
-    name: json["name"],
-    price: json["price"],
-    priceSign: json["price_sign"],
-    currency: json["currency"],
-    imageLink: json["image_link"],
-    productLink: json["product_link"],
-    websiteLink: json["website_link"],
+    title: json["title"],
     description: json["description"],
-    rating: json["rating"],
+    price: json["price"],
+    discountPercentage: json["discountPercentage"].toDouble(),
+    rating: json["rating"].toDouble(),
+    stock: json["stock"],
+    brand: json["brand"],
     category: json["category"],
-    productType: json["product_type"],
-    tagList: json["tag_list"] == null ? [] : List<TagList?>.from(json["tag_list"]!.map((x) => tagListValues!.map[x])),
-    createdAt: DateTime.parse(json["created_at"]),
-    updatedAt: DateTime.parse(json["updated_at"]),
-    productApiUrl: json["product_api_url"],
-    apiFeaturedImage: json["api_featured_image"],
-    productColors: json["product_colors"] == null ? [] : List<ProductColor?>.from(json["product_colors"]!.map((x) => ProductColor.fromJson(x))),
+    thumbnail: json["thumbnail"],
+    images: json["images"] == null ? [] : List<String?>.from(json["images"]!.map((x) => x)),
   );
 
   Map<String, dynamic> toJson() => {
     "id": id,
-    "brand": brand,
-    "name": name,
-    "price": price,
-    "price_sign": priceSign,
-    "currency": currency,
-    "image_link": imageLink,
-    "product_link": productLink,
-    "website_link": websiteLink,
+    "title": title,
     "description": description,
+    "price": price,
+    "discountPercentage": discountPercentage,
     "rating": rating,
+    "stock": stock,
+    "brand": brand,
     "category": category,
-    "product_type": productType,
-    "tag_list": tagList == null ? [] : List<dynamic>.from(tagList!.map((x) => tagListValues.reverse![x])),
-    "created_at": createdAt?.toIso8601String(),
-    "updated_at": updatedAt?.toIso8601String(),
-    "product_api_url": productApiUrl,
-    "api_featured_image": apiFeaturedImage,
-    "product_colors": productColors == null ? [] : List<dynamic>.from(productColors!.map((x) => x!.toJson())),
+    "thumbnail": thumbnail,
+    "images": images == null ? [] : List<dynamic>.from(images!.map((x) => x)),
   };
-}
-
-class ProductColor {
-  ProductColor({
-    this.hexValue,
-    this.colourName,
-  });
-
-  String? hexValue;
-  String? colourName;
-
-  factory ProductColor.fromJson(Map<String, dynamic> json) => ProductColor(
-    hexValue: json["hex_value"],
-    colourName: json["colour_name"],
-  );
-
-  Map<String, dynamic> toJson() => {
-    "hex_value": hexValue,
-    "colour_name": colourName,
-  };
-}
-
-enum TagList { PURPICKS, CERT_CLEAN, VEGAN, GLUTEN_FREE }
-
-final tagListValues = EnumValues({
-  "CertClean": TagList.CERT_CLEAN,
-  "Gluten Free": TagList.GLUTEN_FREE,
-  "purpicks": TagList.PURPICKS,
-  "Vegan": TagList.VEGAN
-});
-
-class EnumValues<T> {
-  Map<String, T> map;
-  Map<T, String>? reverseMap;
-
-  EnumValues(this.map);
-
-  Map<T, String>? get reverse {
-    reverseMap ??= map.map((k, v) => MapEntry(v, k));
-    return reverseMap;
-  }
 }
