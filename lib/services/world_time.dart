@@ -6,12 +6,15 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:world_time_pro/models/product_model.dart';
+import 'package:counter/counter.dart';
 class Choice {
   Choice({ this.title, this.icon, this.category});
   final String? title;
   final String? category;
   final IconData? icon;
 }
+
+
 
 List<Choice> choices =  <Choice>[
   Choice(title: 'Clothes', category:'womens-dresses',icon: Icons.person),
@@ -32,40 +35,31 @@ class User {
   var age;
 }
 
-//Products
-class Products {
-  Products({ this.title, this.icon, this.description, this.rating, this.sold,required this.thumbnail, this.price});
-  final String? title;
-  final IconData? icon;
-  final String ?description;
-  final String thumbnail;
-  final double ?price;
-  final num ?sold;
-  final double? rating;
-  Future<void> getProducts() async{
-    try{
-      http.Response response= await  http.get(Uri.parse('https://dummyjson.com/products'));
-     Map data=convert.jsonDecode(response.body);
-      print('JJH');
-     print(data);
-    }
-    catch(e){
-      print('eoor $e');
-    }
+
+class AddToCartVM extends GetxController {
+   List<ProductModel> lst = <ProductModel>[];
+
+  add(products) {
+    lst.add(products
+        // ProductModel(
+        //     {products}
+        // )
+    );
+    update();
+  }
+
+  del(int index) {
+    lst.removeAt(index);
+    update();
   }
 }
-
-
 
 class ProductCard extends StatelessWidget {
   const ProductCard({ Key ? key, this.products}) : super(key: key);
   // final Products products;
   final  ProductModel ? products;
-
-
   @override
   Widget build(BuildContext context) {
-print(products?.images);
 
     return
       Column(
@@ -83,31 +77,192 @@ print(products?.images);
                   ),
               child: InkWell(
                 onTap: (){
-                  Get.snackbar(
-                    "",
-                    "",
-                    isDismissible: true,
-                    dismissDirection: DismissDirection.horizontal,
-                    titleText:Text( "Added to cart successfully",
-                      style: TextStyle(color: Colors.black,
-                        fontFamily: 'Comforta',
-                        fontWeight: FontWeight.w900,
-                      ),),
-                    //vg leftBarIndicatorColor: Colors.black,
-                    messageText:Text("${products?.title}",
-                      style: TextStyle(color: Colors.black,
-                        fontFamily: 'Comforta',
+                  Get.bottomSheet(
 
+                    Container(
+                        child:Wrap (
+                          children: [
+
+                            Center(
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(12.0, 22.0, 12.0, 12.0),
+                                child: Text(
+                                  'Add to cart',
+
+                                  style: const TextStyle(
+
+                                      fontFamily: 'Comforta',
+                                      fontWeight: FontWeight.w900,
+                                      fontSize: 18.0),
+                                ),
+                              ),
+                            ),
+
+                            // ListTile(title:Row(
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.network('${products?.images?[0]}',
+                                    height: 50,
+                                    width: 50,
+
+                                    fit: BoxFit.fill,
+                                  ),
+
+                                  Column(
+                                    children: [
+                                      Text("${products?.title}" ,
+
+                                        maxLines: 1,
+                                        style: const TextStyle(
+                                            fontFamily: 'Comforta',
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 15.0),
+                                      ),
+                                      SizedBox(height: 2),
+
+
+                                      Container(
+                                        decoration: BoxDecoration(color: Colors.grey[200],
+                                            borderRadius:  BorderRadius.circular(5)),
+                                        child: Padding(
+                                          padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                                          child: Row(
+                                            children: [
+                                              Counter(
+
+                                                min: 0,
+                                                max: 10,
+                                                bound: 1,
+                                                step: 1,
+                                               initial: 5,
+                                                onValueChanged: print,
+
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+
+
+                                      SizedBox(height: 2),
+
+
+                                      Text(
+                                        "${products?.discountPercentage} rs",
+                                        style: const TextStyle(
+                                            fontFamily: 'Comforta',
+                                            fontWeight: FontWeight.w900,
+                                            fontSize: 17.0),
+                                      ),
+
+                                    ],
+                                  ),
+
+                                ],
+
+                              ),
+                            ),
+
+
+                            Padding(
+                              padding: const EdgeInsets.all(34.0),
+                              child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    TextButton(
+                                        child: Text(
+                                            "Add to Cart".toUpperCase(),
+                                            style: TextStyle(fontSize: 14,
+                                              fontFamily: 'Comforta',
+                                              fontWeight: FontWeight.w900,
+                                            )
+                                        ),
+                                        style: ButtonStyle(
+                                            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
+                                            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(20.0),
+                                                    side: BorderSide(color: Colors.black)
+                                                )
+                                            )
+                                        ),
+                                        onPressed: () => null
+                                    ),
+                                    SizedBox(width: 10),
+                                    ElevatedButton(
+                                        child: Text(
+                                            "Cancel".toUpperCase(),
+                                            style: TextStyle(fontSize: 14)
+                                        ),
+                                        style: ButtonStyle(
+                                            foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                            backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                RoundedRectangleBorder(
+                                                    borderRadius: BorderRadius.circular(20.0),
+                                                    side: BorderSide(color: Colors.black)
+                                                )
+                                            )
+                                        ),
+                                        onPressed: () => {Get.back()}
+                                    )
+                                  ]
+                              ),
+                            ),
+
+
+              GetBuilder<AddToCartVM>(
+                  // specify type as Controller
+                  init: AddToCartVM(), // intialize with the Controller
+                  builder: (value) => InkWell(
+                  onTap: () {
+                  value.add(products);
+                  },
+                  child: Padding(
+                  padding: const EdgeInsets.all(2.0),
+                  child: Container(
+                   height:50,
+                   width:100,
+                  decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(15),
+                  color: Colors.blue),
+                  child: Center(
+                  child: Text(
+                  "${products?.title} ADD",
+                  style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 11,
+                  fontWeight: FontWeight.bold,
+                  ),
+                  ),
+                  )),
+                  ),
+                  ),),
+
+                          ],
+                        )
+                    ),
+
+                    isDismissible: true,
+
+                    backgroundColor: Colors.white,
+
+                    shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(15),
+                      side: BorderSide(
+                          color: Colors.white,
+                          style: BorderStyle.solid,
+                          width: 2.0
                       ),
                     ),
-                    colorText: Colors.white,
-                    backgroundColor: Colors.grey[400],
-                    icon: const Icon(Icons.price_change),
-                    snackPosition: SnackPosition.BOTTOM,
                   );
 
-
                 },
+                // onTap: (){
+
+
                               child: new Image.network('${products?.images?[0]}',
                                    height: 50,
                                    width: 50,
@@ -177,17 +332,15 @@ print(products?.images);
                fontWeight: FontWeight.w900,
                fontSize: 17.0),
             ),
+
+
+
       ],
     );
 
 
   }
 }
-
-
-
-
-
 
 
 

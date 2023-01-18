@@ -129,126 +129,199 @@ class _ChooseLocationState extends State<ChooseLocation> {
                               fontSize: 18.0),
                         ),
 
-                      GestureDetector(
-                        onTap: (){
-                          Get.bottomSheet(
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: (){
+                              Get.bottomSheet(
 
-                            Container(
-                                child:Wrap (
-                                  children: [
-                                    Center(
-                                      child: Padding(
-                                        padding: const EdgeInsets.fromLTRB(12.0, 22.0, 12.0, 12.0),
-                                        child: Text(
-                                          'You Cart Items',
-
-                                          style: const TextStyle(
-
-                                              fontFamily: 'Comforta',
-                                              fontWeight: FontWeight.w900,
-                                              fontSize: 18.0),
-                                        ),
-                                      ),
-                                    ),
-                                    ListTile(title:Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
+                                Container(
+                                    child:Wrap (
                                       children: [
-                                        Text('Shopping Bag Ladies',
-                                          style: const TextStyle(
+                                        Center(
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(12.0, 22.0, 12.0, 12.0),
+                                            child: Text(
+                                              'You Cart Items',
 
-                                              fontFamily: 'Comforta',
-                                              fontWeight: FontWeight.w500,
-                                              fontSize: 15.0),
+                                              style: const TextStyle(
+
+                                                  fontFamily: 'Comforta',
+                                                  fontWeight: FontWeight.w900,
+                                                  fontSize: 18.0),
+                                            ),
+                                          ),
+                                        ),
+
+
+
+
+                                        GetBuilder<AddToCartVM>(
+                                          // specify type as Controller
+                                        //  init: AddToCartVM(), // intialize with the Controller
+                                          builder: (value) =>Container(
+                                            // height: 50,
+                                            // width: 50,
+                                            child: ListView.builder(
+                                                shrinkWrap: true,
+                                                physics: NeverScrollableScrollPhysics(),
+
+                                                itemCount: value.lst.length,
+                                                itemBuilder: (BuildContext context, int index) {
+                                                  return     ListTile(title:Row(
+                                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                                    children: [
+                                                      Text("${value.lst[index].title}",
+                                                        style: const TextStyle(
+
+                                                            fontFamily: 'Comforta',
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 15.0),
+                                                      ),
+                                                      InkWell(
+                                                       onTap: (){
+                                                    value.del(index);
+                                                    // Get.changeTheme(ThemeData.dark());
+                                                    },
+                                                        child: Icon(Icons.delete,
+                                                            color: Colors.blue, size: 25
+                                                        ),
+                                                      ),
+
+                                                    ],
+                                                  ),
+                                                  );
+                                                }
+                                            ),
+                                          ),
+                                        ),
+
+                                        Padding(
+                                          padding: const EdgeInsets.all(20.0),
+                                          child: Row(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              children: [
+                                                TextButton(
+                                                    child: Text(
+                                                        "Checkout".toUpperCase(),
+                                                        style: TextStyle(fontSize: 14,
+                                                          fontFamily: 'Comforta',
+                                                          fontWeight: FontWeight.w900,
+                                                        )
+                                                    ),
+                                                    style: ButtonStyle(
+                                                        padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
+                                                        foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(20.0),
+                                                                side: BorderSide(color: Colors.black)
+                                                            )
+                                                        )
+                                                    ),
+                                                    onPressed: () =>{
+                                                      Get.back(),
+                                                        Get.snackbar(
+                                                          "",
+                                                          "",
+                                                          isDismissible: true,
+                                                          dismissDirection: DismissDirection.horizontal,
+                                                          titleText:Text( "Order Placed Successful",
+                                                            style: TextStyle(color: Colors.black,
+                                                              fontFamily: 'Comforta',
+                                                              fontWeight: FontWeight.w900,
+                                                            ),),
+                                                          //vg leftBarIndicatorColor: Colors.black,
+                                                          messageText:Text("Happy Shopping",
+                                                            style: TextStyle(color: Colors.black,
+                                                              fontFamily: 'Comforta',
+
+                                                            ),
+                                                          ),
+                                                          colorText: Colors.white,
+                                                          backgroundColor: Colors.grey[400],
+                                                          icon: const Icon(Icons.price_change),
+                                                          snackPosition: SnackPosition.BOTTOM,
+                                                        ),
+                            }
+                                                ),
+                                                SizedBox(width: 10),
+                                                ElevatedButton(
+                                                    child: Text(
+                                                        "Cancel".toUpperCase(),
+                                                        style: TextStyle(fontSize: 14)
+                                                    ),
+                                                    style: ButtonStyle(
+                                                        foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                                                        backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                            RoundedRectangleBorder(
+                                                                borderRadius: BorderRadius.circular(20.0),
+                                                                side: BorderSide(color: Colors.black)
+                                                            )
+                                                        )
+                                                    ),
+                                                    onPressed: () =>{Get.back()}
+                                                )
+                                              ]
+                                          ),
                                         ),
 
                                       ],
-                                    ) , onTap: (){
-                                     // Get.changeTheme(ThemeData.dark());
-                                    },),
-                                    ListTile(title:Text('Kids Collectoin Shoes',
-                                      style: const TextStyle(
+                                    )
+                                ),
 
-                                          fontFamily: 'Comforta',
-                                          fontWeight: FontWeight.w500,
-                                          fontSize: 15.0),
-                                    ) , onTap: (){
-                                    //  Get.changeTheme(ThemeData.light());
-                                    },),
-                                    Padding(
-                                      padding: const EdgeInsets.all(34.0),
-                                      child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
-                                          children: [
-                                            TextButton(
-                                                child: Text(
-                                                    "Buy Now".toUpperCase(),
-                                                    style: TextStyle(fontSize: 14,
-                                                      fontFamily: 'Comforta',
-                                                      fontWeight: FontWeight.w900,
-                                                    )
-                                                ),
-                                                style: ButtonStyle(
-                                                    padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
-                                                    foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(20.0),
-                                                            side: BorderSide(color: Colors.black)
-                                                        )
-                                                    )
-                                                ),
-                                                onPressed: () => null
-                                            ),
-                                            SizedBox(width: 10),
-                                            ElevatedButton(
-                                                child: Text(
-                                                    "Cancel".toUpperCase(),
-                                                    style: TextStyle(fontSize: 14)
-                                                ),
-                                                style: ButtonStyle(
-                                                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                                                    backgroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                                                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                        RoundedRectangleBorder(
-                                                            borderRadius: BorderRadius.circular(20.0),
-                                                            side: BorderSide(color: Colors.black)
-                                                        )
-                                                    )
-                                                ),
-                                                onPressed: () => null
-                                            )
-                                          ]
-                                      ),
+                                isDismissible: true,
+
+                                backgroundColor: Colors.white,
+
+                                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10),
+                                side: BorderSide(
+                                  color: Colors.white,
+                                  style: BorderStyle.solid,
+                                  width: 2.0
+                                ),
+                                ),
+                              );
+
+                            },
+                          child: Text(
+                              'View Cart',
+                              style: const TextStyle(
+                                  fontFamily: 'Comforta',
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 18.0),
+                            ),
+                          ),
+                          Padding(
+                            padding:
+                            const EdgeInsets.only(left: 0, right: 15, top: 8, bottom: 8),
+                            child: Stack(
+                              children: [
+                                Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Icon(Icons.shopping_cart_rounded,
+                                        color: Colors.grey, size: 25)),
+                                Positioned(
+                                  top: 0,
+                                  left: 22,
+                                  right: 0,
+                                  child: GetBuilder<AddToCartVM>(
+                                    // specify type as Controller
+                                    init: AddToCartVM(), // intialize with the Controller
+                                    builder: (value) => Text(
+                                      value.lst.length.toString() ?? "0",
                                     ),
-
-                                  ],
-                                )
+                                  ),
+                                ),
+                              ],
                             ),
-
-                            isDismissible: true,
-
-                            backgroundColor: Colors.white,
-
-                            shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(10),
-                            side: BorderSide(
-                              color: Colors.white,
-                              style: BorderStyle.solid,
-                              width: 2.0
-                            ),
-                            ),
-                          );
-
-                        },
-                      child: Text(
-                          'View Cart',
-                          style: const TextStyle(
-                              fontFamily: 'Comforta',
-                              fontWeight: FontWeight.w900,
-                              fontSize: 18.0),
-                        ),
+                          ),
+                        ],
                       ),
-                    ],
+
+                  ],
                   ),
 
             SizedBox(height: 20),
@@ -320,13 +393,13 @@ class _ChooseLocationState extends State<ChooseLocation> {
                     )
                     );
                   else
-  return GridView.count(
+            return GridView.count(
           crossAxisCount: 2,
           crossAxisSpacing: 18.0,
           mainAxisSpacing: 18.0,
           childAspectRatio: 1,
           shrinkWrap: true,
-    physics: NeverScrollableScrollPhysics(),
+          physics: NeverScrollableScrollPhysics(),
           children:
           List.generate(productController.productList.length, (index) {
             //  return Text("count ${productController.productList[index]?.name}");

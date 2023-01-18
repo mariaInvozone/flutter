@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:world_time_pro/models/product_model.dart';
 import 'package:world_time_pro/commonmodule/AppString.dart';
 import 'package:world_time_pro/product_controller.dart';
+import 'package:counter/counter.dart';
 class AllProducts extends StatefulWidget {
   const AllProducts({Key? key}) : super(key: key);
   @override
