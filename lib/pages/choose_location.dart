@@ -165,14 +165,21 @@ class _ChooseLocationState extends State<ChooseLocation> {
                                             child: ListView.builder(
                                                 shrinkWrap: true,
                                                 physics: NeverScrollableScrollPhysics(),
-
-                                                itemCount: value.lst.length,
+                                                itemCount: value.pp.length,
+                                               // itemCount: value.lst.length,
                                                 itemBuilder: (BuildContext context, int index) {
                                                   return     ListTile(title:Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                                                     children: [
                                                       Text("${value.lst[index].title}",
+                                                        style: const TextStyle(
+
+                                                            fontFamily: 'Comforta',
+                                                            fontWeight: FontWeight.w500,
+                                                            fontSize: 15.0),
+                                                      ),
+                                                      Text("${value.pp[index]?.quan}",
                                                         style: const TextStyle(
 
                                                             fontFamily: 'Comforta',
@@ -341,6 +348,7 @@ class _ChooseLocationState extends State<ChooseLocation> {
                       return  InkWell(
                           onTap: (){
                             productController.fetchProducts(choices[index].category);
+                            Navigator.pushReplacementNamed(context, '/allproducts',arguments:"${choices[index].title}");
                             },
                           child: SelectCard(choice: choices[index]));
 
@@ -367,9 +375,8 @@ class _ChooseLocationState extends State<ChooseLocation> {
                 ),
                 GestureDetector(
                   onTap: (){
-
-                   Navigator.pushReplacementNamed(context, '/allproducts');
-
+                    productController.fetchAllProduct('');
+                   Navigator.pushReplacementNamed(context, '/allproducts', arguments: 'All Products');
                   },
                   child: Text(
                     'See All',

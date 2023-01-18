@@ -1,4 +1,6 @@
 
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/state_manager.dart';
 import 'dart:convert' as convert;
@@ -34,22 +36,39 @@ class User {
   var name;
   var age;
 }
+//
+class Users {
+  Users({this.products, this.quan});
+ ProductModel? products;
+  int? quan;
+}
 
 
 class AddToCartVM extends GetxController {
+      List<Users> pp=<Users>[];
    List<ProductModel> lst = <ProductModel>[];
+   int quantity = 0;
 
-  add(products) {
-    lst.add(products
-        // ProductModel(
-        //     {products}
-        // )
-    );
+   updateQuanty(totalQuanity){
+
+     quantity=totalQuanity;
+   }
+
+  add(products,quantity) {
+     print(quantity);
+    Users u = Users(products:products, quan:quantity);
+
+    lst.add(products);
+     pp.add(u);
+
+
     update();
   }
 
   del(int index) {
     lst.removeAt(index);
+    pp.removeAt(index);
+    
     update();
   }
 }
@@ -60,7 +79,7 @@ class ProductCard extends StatelessWidget {
   final  ProductModel ? products;
   @override
   Widget build(BuildContext context) {
-
+    int? _name = 1;
     return
       Column(
 
@@ -123,27 +142,41 @@ class ProductCard extends StatelessWidget {
                                       SizedBox(height: 2),
 
 
-                                      Container(
-                                        decoration: BoxDecoration(color: Colors.grey[200],
-                                            borderRadius:  BorderRadius.circular(5)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
-                                          child: Row(
-                                            children: [
-                                              Counter(
+                                      GetBuilder<AddToCartVM>(
+                                        // specify type as Controller
+                                        init: AddToCartVM(), // intialize with the Controller
+                                        builder: (value) =>        Container(
+                                          decoration: BoxDecoration(color: Colors.grey[200],
+                                              borderRadius:  BorderRadius.circular(5)),
+                                          child: Padding(
+                                            padding: const EdgeInsets.fromLTRB(15, 5, 15, 5),
+                                            child: Row(
+                                              children: [
+                                                Counter(
 
-                                                min: 0,
-                                                max: 10,
-                                                bound: 1,
-                                                step: 1,
-                                               initial: 5,
-                                                onValueChanged: print,
+                                                  min: 1,
+                                                  max: 10,
+                                                  bound: 1,
+                                                  step: 1,
+                                                  initial:_name,
+                                                  onValueChanged: (num){
+                                                    // setState(() {
+                                                 _name=num as int?;
+                                                    // });
+                                                    // value.updateQuanty(num);
+                                                  },
 
-                                              ),
-                                            ],
+                                                ),
+                                              ],
+                                            ),
                                           ),
                                         ),
+
+
                                       ),
+
+
+
 
 
                                       SizedBox(height: 2),
@@ -171,26 +204,32 @@ class ProductCard extends StatelessWidget {
                               child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    TextButton(
-                                        child: Text(
-                                            "Add to Cart".toUpperCase(),
-                                            style: TextStyle(fontSize: 14,
-                                              fontFamily: 'Comforta',
-                                              fontWeight: FontWeight.w900,
-                                            )
-                                        ),
-                                        style: ButtonStyle(
-                                            padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
-                                            foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
-                                            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                                                RoundedRectangleBorder(
-                                                    borderRadius: BorderRadius.circular(20.0),
-                                                    side: BorderSide(color: Colors.black)
-                                                )
-                                            )
-                                        ),
-                                        onPressed: () => null
+
+                                    GetBuilder<AddToCartVM>(
+                                      // specify type as Controller
+                                      init: AddToCartVM(), // intialize with the Controller
+                                      builder: (value) =>     TextButton(
+                                          child: Text(
+                                              "Add to Cart".toUpperCase(),
+                                              style: TextStyle(fontSize: 14,
+                                                fontFamily: 'Comforta',
+                                                fontWeight: FontWeight.w900,
+                                              )
+                                          ),
+                                          style: ButtonStyle(
+                                              padding: MaterialStateProperty.all<EdgeInsets>(EdgeInsets.all(12)),
+                                              foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(20.0),
+                                                      side: BorderSide(color: Colors.black)
+                                                  )
+                                              )
+                                          ),
+                                          onPressed: () => { value.add(products, _name)}
+                                      ),
                                     ),
+
                                     SizedBox(width: 10),
                                     ElevatedButton(
                                         child: Text(
@@ -214,33 +253,8 @@ class ProductCard extends StatelessWidget {
                             ),
 
 
-              GetBuilder<AddToCartVM>(
-                  // specify type as Controller
-                  init: AddToCartVM(), // intialize with the Controller
-                  builder: (value) => InkWell(
-                  onTap: () {
-                  value.add(products);
-                  },
-                  child: Padding(
-                  padding: const EdgeInsets.all(2.0),
-                  child: Container(
-                   height:50,
-                   width:100,
-                  decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Colors.blue),
-                  child: Center(
-                  child: Text(
-                  "${products?.title} ADD",
-                  style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 11,
-                  fontWeight: FontWeight.bold,
-                  ),
-                  ),
-                  )),
-                  ),
-                  ),),
+
+
 
                           ],
                         )
@@ -340,6 +354,8 @@ class ProductCard extends StatelessWidget {
 
 
   }
+
+  void setState(Null Function() param0) {}
 }
 
 

@@ -8,10 +8,17 @@ import 'package:world_time_pro/models/product_model.dart';
 import 'package:world_time_pro/commonmodule/AppString.dart';
 import 'package:world_time_pro/product_controller.dart';
 import 'package:counter/counter.dart';
+import 'package:world_time_pro/services/world_time.dart';
 class AllProducts extends StatefulWidget {
   const AllProducts({Key? key}) : super(key: key);
   @override
   State<AllProducts> createState() => _AllProductsState();
+}
+class Choice {
+  Choice({ this.title, this.icon, this.category});
+  final String? title;
+  final String? category;
+  final IconData? icon;
 }
 class _AllProductsState extends State<AllProducts> {
 
@@ -19,11 +26,15 @@ class _AllProductsState extends State<AllProducts> {
 
   final ProductController productController =Get.put(ProductController());
 
+
+
   Widget build(BuildContext context) {
+    Object? s = ModalRoute?.of(context)?.settings?.arguments;
+    print(s.runtimeType);
 
     return Scaffold(
 appBar: AppBar(
-  title: const Text('View All Products',
+  title:  Text(" ${s}",
     style: TextStyle(color: Colors.black,
         fontFamily: 'Comforta',
         fontWeight: FontWeight.w900,
