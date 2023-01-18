@@ -32,7 +32,8 @@ class _AllProductsState extends State<AllProducts> {
     Object? s = ModalRoute?.of(context)?.settings?.arguments;
     print(s.runtimeType);
 
-    return Scaffold(
+    return 
+      Scaffold(
 appBar: AppBar(
   title:  Text(" ${s}",
     style: TextStyle(color: Colors.black,
@@ -200,7 +201,7 @@ appBar: AppBar(
                           mainAxisSpacing: 18.0,
                           childAspectRatio: 1,
                           shrinkWrap: true,
-
+                          physics: NeverScrollableScrollPhysics(),
                           children:
                           List.generate(productController.productList.length, (index) {
                             //  return Text("count ${productController.productList[index]?.name}");
@@ -211,6 +212,33 @@ appBar: AppBar(
                         );
 
                     }),
+                    // Obx(()  {
+                    //   if(productController.isLoading.value)
+                    //     return Center(child: SizedBox(
+                    //       child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.grey)
+                    //       ),
+                    //       height: 20.0,
+                    //       width: 20.0,
+                    //     )
+                    //     );
+                    //   else
+                    //     return GridView.count(
+                    //       crossAxisCount: 2,
+                    //       crossAxisSpacing: 18.0,
+                    //       mainAxisSpacing: 18.0,
+                    //       childAspectRatio: 1,
+                    //       shrinkWrap: true,
+                    //       physics: NeverScrollableScrollPhysics(),
+                    //       children:
+                    //       List.generate(productController.productList.length, (index) {
+                    //         //  return Text("count ${productController.productList[index]?.name}");
+                    //         return ProductCard(products: productController.productList[index]);
+                    //
+                    //       }
+                    //       ),
+                    //     );
+                    //
+                    // }),
                   ],
 
                 ),

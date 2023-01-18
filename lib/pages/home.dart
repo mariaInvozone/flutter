@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:flutter/services.dart';
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -24,7 +25,10 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
 
-    return  Scaffold(
+    return  AnnotatedRegion<SystemUiOverlayStyle>(
+        value: SystemUiOverlayStyle.dark,
+      child:
+        Scaffold(
 
         resizeToAvoidBottomInset: false,
         body: SafeArea(
@@ -156,7 +160,8 @@ class _HomeState extends State<Home> {
                 ),
           ),
 
-      );
+      ),
+    );
 
   }
 }
