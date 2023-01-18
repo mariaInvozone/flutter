@@ -166,13 +166,13 @@ class _ChooseLocationState extends State<ChooseLocation> {
                                                 shrinkWrap: true,
                                                 physics: NeverScrollableScrollPhysics(),
                                                 itemCount: value.pp.length,
-                                               // itemCount: value.lst.length,
+                                              //  itemCount: value.lst.length,
                                                 itemBuilder: (BuildContext context, int index) {
                                                   return     ListTile(title:Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                                                     children: [
-                                                      Text("${value.lst[index].title}",
+                                                      Text("${value.lst[index]?.title}",
                                                         style: const TextStyle(
 
                                                             fontFamily: 'Comforta',

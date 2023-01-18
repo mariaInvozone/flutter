@@ -55,11 +55,28 @@ class AddToCartVM extends GetxController {
    }
 
   add(products,quantity) {
-     print(quantity);
+   
     Users u = Users(products:products, quan:quantity);
 
+
+    var myListFiltered = lst.where((e) => e.title ==products.title);
+    print(myListFiltered.length);
+    if (myListFiltered.length > 0) {
+
+    lst.removeWhere((item) =>item.title ==products.title);
+    pp.removeWhere((item) =>item.products ==products);
     lst.add(products);
-     pp.add(u);
+
+    pp.add(u);
+
+    } else {
+
+      lst.add(products);
+
+       pp.add(u);
+    }
+
+
 
 
     update();
@@ -68,7 +85,7 @@ class AddToCartVM extends GetxController {
   del(int index) {
     lst.removeAt(index);
     pp.removeAt(index);
-    
+
     update();
   }
 }
@@ -226,7 +243,32 @@ class ProductCard extends StatelessWidget {
                                                   )
                                               )
                                           ),
-                                          onPressed: () => { value.add(products, _name)}
+                                          onPressed: () => {
+                                            value.add(products, _name),
+                                            Get.back(),
+                                            Get.snackbar(
+                                              "",
+                                              "",
+                                              isDismissible: true,
+                                              dismissDirection: DismissDirection.horizontal,
+                                              titleText:Text( "Added To Cart Successful",
+                                                style: TextStyle(color: Colors.black,
+                                                  fontFamily: 'Comforta',
+                                                  fontWeight: FontWeight.w900,
+                                                ),),
+                                              //vg leftBarIndicatorColor: Colors.black,
+                                              messageText:Text("Happy Shopping",
+                                                style: TextStyle(color: Colors.black,
+                                                  fontFamily: 'Comforta',
+
+                                                ),
+                                              ),
+                                              colorText: Colors.white,
+                                              backgroundColor: Colors.grey[400],
+                                              icon: const Icon(Icons.price_change),
+                                              snackPosition: SnackPosition.BOTTOM,
+                                            ),
+                                          }
                                       ),
                                     ),
 
