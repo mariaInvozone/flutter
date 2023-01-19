@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:world_time_pro/pages/all_products.dart';
+import 'package:world_time_pro/pages/cart.dart';
 import 'package:world_time_pro/pages/products_listing.dart';
 
 class ChooseLocation extends StatelessWidget {
@@ -31,12 +32,9 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
   TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
   static const List<Widget> _widgetOptions = <Widget>[
     ProductsList(),
+    Cart(),
     Text(
-      'Index 1: Business',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: School',
+      'Me',
       style: optionStyle,
     ),
   ];
@@ -64,11 +62,11 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.business),
-            label: 'Business',
+            label: 'Cart',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.school),
-            label: 'School',
+            label: 'You',
           ),
         ],
         currentIndex: _selectedIndex,
