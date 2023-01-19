@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
-import 'package:world_time_pro/pages/home.dart';
-import 'package:world_time_pro/pages/loading.dart';
-import 'pages/choose_location.dart';
-import 'pages/all_products.dart';
-void main()=> runApp(MaterialApp(
+import 'package:get/get.dart';
+import 'package:world_time_pro/helper/route_helper.dart';
 
-  initialRoute: '/',
-  routes: {
+void main() => runApp(MyApp());
 
-    '/':(context)=> Loading(),
-    '/home':(context)=> Home(),
-    '/location':(context)=> ChooseLocation(),
-    '/allproducts':(context)=> AllProducts(),
-  },
-));
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'Get Route Managment',
+      initialRoute: '/',
+      getPages: appRoutes(),
+    );
+  }
+}
+
 

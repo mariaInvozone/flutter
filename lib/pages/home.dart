@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter/services.dart';
+import 'package:world_time_pro/pages/choose_location.dart';
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
 
@@ -121,8 +122,8 @@ class _HomeState extends State<Home> {
                           ElevatedButton(
                             style: raisedButtonStyle,
                             onPressed: () {
-                              Navigator.pushReplacementNamed(context, '/location');
-
+                            //  Navigator.pushReplacementNamed(context, '/location');
+                              Get.to(ChooseLocation());
                             },
                             child:  Container(
                               height: 55,
@@ -177,4 +178,7 @@ final ButtonStyle raisedButtonStyle = ElevatedButton.styleFrom(
 
   ),
 );
+
+
+
 
