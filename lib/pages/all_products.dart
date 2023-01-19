@@ -32,7 +32,7 @@ class _AllProductsState extends State<AllProducts> {
     Object? s = ModalRoute?.of(context)?.settings?.arguments;
     print(s.runtimeType);
 
-    return 
+    return
       Scaffold(
 appBar: AppBar(
   title:  Text(" ${s}",
